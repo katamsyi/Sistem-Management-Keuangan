@@ -1,0 +1,30 @@
+# GET all notes (Retrieve all diaries)
+GET http://localhost:5000/note
+
+
+###
+
+# POST a new note (Create a new diary entry)
+POST http://localhost:5000/add-note
+Content-Type: application/json
+
+{
+  "tanggal": "2025-03-05",
+  "isi": "This is a sample diary entry."
+}
+
+###
+
+# PUT (Update) an existing note by ID
+PUT http://localhost:5000/edit-note/7
+Content-Type: application/json
+
+{
+  "tanggal": "2025-03-06",
+  "isi": "Updated diary content."
+}
+
+###
+
+# DELETE a note by ID
+DELETE http://localhost:5000/delete-note/7
