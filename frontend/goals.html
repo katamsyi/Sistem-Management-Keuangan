@@ -59,9 +59,20 @@
 
 <body>
     <h1>Target Keuangan</h1>
-    <button class="logout" onclick="logout()">Logout</button>
-    <a href="transaksi.html">&larr; Kembali ke Transaksi</a>
-
+    <a href="transaksi.html">
+        <button style="
+          background-color: #3498db;
+          color: white;
+          border: none;
+          padding: 10px 15px;
+          margin-bottom: 20px;
+          cursor: pointer;
+          font-size: 14px;
+          border-radius: 4px;
+        ">
+            ← Kembali ke Transaksi
+        </button>
+    </a>
     <form id="form-goal">
         <input type="text" id="name" placeholder="Nama Tujuan" required />
         <input type="number" id="target_amount" placeholder="Target (Rp)" required />

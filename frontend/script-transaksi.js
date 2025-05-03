@@ -1,14 +1,12 @@
-//const USER_ID = localStorage.getItem("user_id");
+const USER_ID = localStorage.getItem("user_id");
 if (!USER_ID) {
   alert("Anda belum login. Silakan login terlebih dahulu.");
-  window.location.href = "login.html"; // redirect jika belum login
+  window.location.href = "login.html";
 }
-
-console.log("USER_ID:", USER_ID);
 
 const form = document.getElementById("form-transaksi");
 const listContainer = document.getElementById("transaction-list");
-
+const submitButton = form.querySelector("button[type='submit']");
 let currentId = null;
 let lastData = [];
 
@@ -16,11 +14,8 @@ async function loadCategories() {
   try {
     const res = await axios.get(`${BASE_URL}/categories`);
     const categories = res.data;
-    console.log("Kategori dari backend:", categories); // 👈 CEK INI DI CONSOLE
-
     const categorySelect = document.getElementById("category_id");
     categorySelect.innerHTML = '<option value="">Pilih Kategori</option>';
-
     categories.forEach((cat) => {
       const option = document.createElement("option");
       option.value = cat.id;
@@ -32,15 +27,11 @@ async function loadCategories() {
   }
 }
 
-// Ambil & tampilkan transaksi
 async function getTransactions() {
   try {
     const res = await axios.get(`${BASE_URL}/transactions/${USER_ID}`);
     const data = res.data;
     lastData = data;
-
-    console.log("DATA DARI BACKEND:", data);
-
     listContainer.innerHTML = "";
 
     if (data.length === 0) {
@@ -50,16 +41,13 @@ async function getTransactions() {
     }
 
     data.forEach((trx) => {
-      const div = document.createElement("div");
-
-      // ambil nama kategori dari relasi jika ada
       const kategori = trx.category ? trx.category.name : "-";
-
+      const div = document.createElement("div");
+      div.className = `transaction ${trx.type}`;
       div.innerHTML = `
         <p><strong>${trx.tanggal}</strong> - ${trx.type} - Rp${Number(
         trx.amount
-      ).toLocaleString()} - ${trx.description} 
-        <em>(${kategori})</em></p>
+      ).toLocaleString()} - ${trx.description} <em>(${kategori})</em></p>
         <button onclick="editTransaction(${trx.id})">Edit</button>
         <button onclick="deleteTransaction(${trx.id})">Hapus</button>
       `;
@@ -72,7 +60,6 @@ async function getTransactions() {
   }
 }
 
-// Tambah atau update
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -85,6 +72,19 @@ form.addEventListener("submit", async (e) => {
     category_id: document.getElementById("category_id").value,
   };
 
+  if (!data.tanggal || !data.type || !data.amount || !data.category_id) {
+    alert("Harap lengkapi semua kolom.");
+    return;
+  }
+
+  if (parseFloat(data.amount) <= 0) {
+    alert("Jumlah harus lebih dari 0.");
+    return;
+  }
+
+  submitButton.disabled = true;
+  submitButton.textContent = currentId ? "Menyimpan..." : "Menambahkan...";
+
   try {
     if (currentId) {
       await axios.put(`${BASE_URL}/transactions/${currentId}`, data);
@@ -94,15 +94,22 @@ form.addEventListener("submit", async (e) => {
     }
 
     form.reset();
-    document.querySelector("button[type='submit']").textContent = "Simpan";
+    submitButton.textContent = "Simpan";
     getTransactions();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    alert("Transaksi berhasil disimpan.");
   } catch (err) {
     console.error("Gagal simpan:", err.message);
+    alert("Gagal menyimpan transaksi.");
+  } finally {
+    submitButton.disabled = false;
   }
 });
 
-// Hapus
 async function deleteTransaction(id) {
+  const yakin = confirm("Yakin ingin menghapus transaksi ini?");
+  if (!yakin) return;
+
   try {
     await axios.delete(`${BASE_URL}/transactions/${id}`);
     getTransactions();
@@ -111,26 +118,19 @@ async function deleteTransaction(id) {
   }
 }
 
-// Edit
 function editTransaction(id) {
   const trx = lastData.find((t) => t.id === id);
-  if (!trx) {
-    console.error("Transaksi tidak ditemukan:", id);
-    return;
-  }
-
-  console.log("Edit klik untuk ID:", id);
+  if (!trx) return;
 
   document.getElementById("tanggal").value = trx.tanggal;
   document.getElementById("type").value = trx.type;
   document.getElementById("amount").value = trx.amount;
   document.getElementById("description").value = trx.description;
-
+  document.getElementById("category_id").value = trx.category_id;
   currentId = id;
-  document.querySelector("button[type='submit']").textContent = "Update";
+  submitButton.textContent = "Update";
 }
 
-// Ringkasan saldo
 function tampilkanRingkasan(data) {
   let income = 0;
   let expense = 0;
@@ -150,7 +150,5 @@ function tampilkanRingkasan(data) {
     "Rp" + saldo.toLocaleString();
 }
 
-// Muat saat pertama
 getTransactions();
-loadCategories(); // langsung panggil saja
-console.log("loadCategories dipanggil!");
+loadCategories();
