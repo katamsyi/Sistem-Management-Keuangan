@@ -1,30 +1,141 @@
-# GET all notes (Retrieve all diaries)
-GET http://localhost:5000/note
+#########################################
+# 🔐 USER AUTHENTICATION
+#########################################
 
-
-###
-
-# POST a new note (Create a new diary entry)
-POST http://localhost:5000/add-note
+### 🔹 Register User
+POST http://localhost:5000/register
 Content-Type: application/json
 
 {
-  "tanggal": "2025-03-05",
-  "isi": "This is a sample diary entry."
+  "name": "Ageng1",
+  "email": "1ageng@mail.com",
+  "password": "123456"
 }
 
 ###
 
-# PUT (Update) an existing note by ID
-PUT http://localhost:5000/edit-note/7
+### 🔹 Login User
+POST http://localhost:5000/login
 Content-Type: application/json
 
 {
-  "tanggal": "2025-03-06",
-  "isi": "Updated diary content."
+  "email": "1ageng@mail.com",
+  "password": "123456"
+}
+
+#########################################
+# 💸 TRANSAKSI (CRUD)
+#########################################
+
+### 🔹 GET Semua Transaksi untuk User ID 1
+GET http://localhost:5000/transactions/1
+
+###
+
+### 🔹 Tambah Transaksi (dengan category_id)
+POST http://localhost:5000/transactions
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "tanggal": "2025-05-03",
+  "type": "income",
+  "amount": 250000,
+  "description": "Gaji freelance",
+  "category_id": 3
 }
 
 ###
 
-# DELETE a note by ID
-DELETE http://localhost:5000/delete-note/7
+### 🔹 Update Transaksi ID 2 (dengan category_id)
+PUT http://localhost:5000/transactions/2
+Content-Type: application/json
+
+{
+  "tanggal": "2025-05-04",
+  "type": "expense",
+  "amount": 100000,
+  "description": "Beli pulsa",
+  "category_id": 1
+}
+
+###
+
+### 🔹 Hapus Transaksi ID 2
+DELETE http://localhost:5000/transactions/2
+
+#########################################
+# 🗂️ KATEGORI (CRUD)
+#########################################
+
+### 🔹 GET Semua Kategori
+GET http://localhost:5000/categories
+
+###
+
+### 🔹 Tambah Kategori
+POST http://localhost:5000/categories
+Content-Type: application/json
+
+{
+  "name": "Kesehatan"
+}
+
+###
+
+### 🔹 GET Kategori by ID
+GET http://localhost:5000/categories/1
+
+###
+
+### 🔹 Update Kategori ID 1
+PUT http://localhost:5000/categories/1
+Content-Type: application/json
+
+{
+  "name": "Makanan & Minuman"
+}
+
+###
+
+### 🔹 Hapus Kategori ID 1
+DELETE http://localhost:5000/categories/1
+
+#########################################
+# 🎯 GOALS / TARGET KEUANGAN (CRUD)
+#########################################
+
+### 🔹 Tambah Goal Baru
+POST http://localhost:5000/goals
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "name": "Beli Laptop",
+  "target_amount": 10000000,
+  "current_amount": 2000000,
+  "due_date": "2025-08-01"
+}
+
+###
+
+### 🔹 GET Semua Goal untuk User ID 1
+GET http://localhost:5000/goals/1
+
+###
+
+### 🔹 Update Goal ID 3
+PUT http://localhost:5000/goals/3
+Content-Type: application/json
+
+{
+  "name": "Beli Laptop Baru",
+  "target_amount": 12000000,
+  "current_amount": 5000000,
+  "due_date": "2026-01-31"
+}
+
+###
+
+### 🔹 Delete Goal ID 3
+DELETE http://localhost:5000/goals/3

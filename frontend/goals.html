@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Target Keuangan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        form,
+        .goal-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        input,
+        button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .goal-item {
+            border-left: 5px solid #007bff;
+        }
+
+        button.logout {
+            float: right;
+            background: #d9534f;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Target Keuangan</h1>
+    <button class="logout" onclick="logout()">Logout</button>
+    <a href="transaksi.html">&larr; Kembali ke Transaksi</a>
+
+    <form id="form-goal">
+        <input type="text" id="name" placeholder="Nama Tujuan" required />
+        <input type="number" id="target_amount" placeholder="Target (Rp)" required />
+        <input type="number" id="current_amount" placeholder="Terkumpul (Rp)" required />
+        <input type="date" id="due_date" required />
+        <button type="submit">Simpan</button>
+    </form>
+
+    <h2>Daftar Target</h2>
+    <div id="goal-list"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="script-goals.js" defer></script>
+</body>
+
+</html>

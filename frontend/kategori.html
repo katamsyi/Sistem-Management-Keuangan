@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Kategori</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        input,
+        button {
+            padding: 8px;
+            margin: 4px 0;
+        }
+
+        .kategori-item {
+            margin: 6px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Kelola Kategori</h1>
+
+    <form id="form-kategori">
+        <input type="text" id="nama-kategori" placeholder="Nama Kategori" required />
+        <button type="submit">Simpan</button>
+    </form>
+
+    <h2>Daftar Kategori</h2>
+    <div id="daftar-kategori"></div>
+
+    <script src="script-kategori.js"></script>
+    <a href="transaksi.html">
+        <button style="
+          background-color: #3498db;
+          color: white;
+          border: none;
+          padding: 10px 15px;
+          margin-bottom: 20px;
+          cursor: pointer;
+          font-size: 14px;
+          border-radius: 4px;
+        ">
+            ← Kembali ke Transaksi
+        </button>
+    </a>
+
+</body>
+
+</html>
