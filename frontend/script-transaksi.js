@@ -32,10 +32,16 @@ async function getTransactions() {
     const res = await axios.get(`${BASE_URL}/transactions/${USER_ID}`);
     const data = res.data;
     lastData = data;
-    listContainer.innerHTML = "";
+
+    const listIncome = document.getElementById("list-income");
+    const listExpense = document.getElementById("list-expense");
+
+    listIncome.innerHTML = "<h3>Pemasukan</h3>";
+    listExpense.innerHTML = "<h3>Pengeluaran</h3>";
 
     if (data.length === 0) {
-      listContainer.innerHTML = "<p>Belum ada transaksi.</p>";
+      listIncome.innerHTML += "<p>Tidak ada pemasukan.</p>";
+      listExpense.innerHTML += "<p>Tidak ada pengeluaran.</p>";
       tampilkanRingkasan([]);
       return;
     }
@@ -45,13 +51,20 @@ async function getTransactions() {
       const div = document.createElement("div");
       div.className = `transaction ${trx.type}`;
       div.innerHTML = `
-        <p><strong>${trx.tanggal}</strong> - ${trx.type} - Rp${Number(
+        <p><strong>${trx.tanggal}</strong><br>Rp${Number(
         trx.amount
       ).toLocaleString()} - ${trx.description} <em>(${kategori})</em></p>
-        <button onclick="editTransaction(${trx.id})">Edit</button>
-        <button onclick="deleteTransaction(${trx.id})">Hapus</button>
+        <div class="trx-actions">
+          <button onclick="editTransaction(${trx.id})">✏️</button>
+          <button onclick="deleteTransaction(${trx.id})">🗑️</button>
+        </div>
       `;
-      listContainer.appendChild(div);
+
+      if (trx.type === "income") {
+        listIncome.appendChild(div);
+      } else {
+        listExpense.appendChild(div);
+      }
     });
 
     tampilkanRingkasan(data);
