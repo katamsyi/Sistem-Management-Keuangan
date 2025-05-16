@@ -1,245 +1,84 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Manajemen Keuangan</title>
-
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Manajemen Keuangan</title>
-        <link rel="stylesheet" href="style.css" />
-    </head>
-
-    <style>
-        .transaksi-grid {
-            display: flex;
-            gap: 20px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-
-        .transaksi-grid>div {
-            flex: 1;
-            min-width: 300px;
-            background: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .transaction {
-            margin-bottom: 12px;
-            padding: 10px;
-            background-color: #fefefe;
-            border-left: 5px solid transparent;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .transaction.income {
-            border-color: #2ecc71;
-        }
-
-        .transaction.expense {
-            border-color: #e74c3c;
-        }
-
-        .trx-actions button {
-            margin-left: 5px;
-            padding: 4px 8px;
-            font-size: 13px;
-            border: none;
-            background-color: #eee;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #f9f9f9;
-            padding: 20px;
-            max-width: 700px;
-            margin: auto;
-        }
-
-        h1,
-        h2,
-        h3 {
-            text-align: center;
-        }
-
-        .top-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .top-buttons button {
-            padding: 8px 15px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        form {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        input,
-        select,
-        button {
-            padding: 10px;
-            font-size: 14px;
-        }
-
-        .transaction {
-            background: #fff;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-left: 5px solid #ccc;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .income {
-            border-left-color: green;
-        }
-
-        .expense {
-            border-left-color: red;
-        }
-
-        button.logout {
-            background: #d9534f;
-            color: white;
-            border: none;
-        }
-
-        button.link-btn {
-            background: #0275d8;
-            color: white;
-            border: none;
-        }
-
-        #ringkasan-saldo {
-            display: flex;
-            gap: 1rem;
-            margin: 20px 0;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .saldo-box {
-            flex: 1;
-            min-width: 200px;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
-        }
-
-        .saldo-box h4 {
-            margin: 0;
-            font-size: 16px;
-            font-weight: 600;
-            opacity: 0.9;
-        }
-
-        .saldo-box p {
-            margin-top: 8px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .saldo-box.income {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-        }
-
-        .saldo-box.expense {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-        }
-
-        .saldo-box.saldo {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-        }
-
-        .saldo-box:hover {
-            transform: scale(1.03);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manajemen Keuangan</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <div class="sidebar">
+    <h2>KeuanganKu</h2>
+    <ul>
+      <li><a href="transaksi.html" class="active">Transaksi</a></li>
+      <li><a href="kategori.html">Kelola Kategori</a></li>
+      <li><a href="goals.html">Kelola Goal</a></li>
+      <li><button onclick="logout()" class="logout">Logout</button></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
     <h1>Manajemen Transaksi</h1>
 
-    <div class="top-buttons">
-        <button class="link-btn" onclick="window.location.href='kategori.html'">Kelola Kategori</button>
-        <button class="link-btn" onclick="window.location.href='goals.html'">Kelola Goal</button>
-        <button class="logout" onclick="logout()">Logout</button>
-    </div>
+    <form id="form-transaksi" class="form-container">
+      <label for="tanggal">Tanggal</label>
+      <input type="date" id="tanggal" required />
 
-    <form id="form-transaksi">
-        <input type="date" id="tanggal" required />
-        <select id="type">
-            <option value="income">Pemasukan</option>
-            <option value="expense">Pengeluaran</option>
-        </select>
-        <input type="number" id="amount" placeholder="Jumlah" required />
-        <input type="text" id="description" placeholder="Keterangan" />
-        <select id="category_id" required>
-            <option value="">Pilih Kategori</option>
-        </select>
-        <button type="submit">Simpan</button>
+      <label for="type">Tipe</label>
+      <select id="type">
+        <option value="income">Pemasukan</option>
+        <option value="expense">Pengeluaran</option>
+      </select>
+
+      <label for="amount">Jumlah</label>
+      <input type="number" id="amount" placeholder="Jumlah" required />
+
+      <label for="description">Keterangan</label>
+      <input type="text" id="description" placeholder="Keterangan" />
+
+      <label for="category_id">Kategori</label>
+      <select id="category_id" required>
+        <option value="">Pilih Kategori</option>
+      </select>
+
+      <button type="submit">Simpan</button>
     </form>
 
     <h2>Daftar Transaksi</h2>
     <div id="transaction-list" class="transaksi-grid">
-        <div id="list-expense">
-            <h3>Pengeluaran</h3>
-            <!-- transaksi pengeluaran akan ditampilkan di sini -->
-        </div>
-        <div id="list-income">
-            <h3>Pemasukan</h3>
-            <!-- transaksi pemasukan akan ditampilkan di sini -->
-        </div>
+      <div id="list-expense">
+        <h3>Pengeluaran</h3>
+      </div>
+      <div id="list-income">
+        <h3>Pemasukan</h3>
+      </div>
     </div>
-
 
     <h3>Ringkasan Saldo</h3>
     <div id="ringkasan-saldo">
-        <div class="saldo-box income">
-            <h4>Pemasukan</h4>
-            <p id="total-income">Rp0</p>
-        </div>
-        <div class="saldo-box expense">
-            <h4>Pengeluaran</h4>
-            <p id="total-expense">Rp0</p>
-        </div>
-        <div class="saldo-box saldo">
-            <h4>Saldo Akhir</h4>
-            <p id="saldo-akhir">Rp0</p>
-        </div>
+      <div class="saldo-box income">
+        <h4>Pemasukan</h4>
+        <p id="total-income">Rp0</p>
+      </div>
+      <div class="saldo-box expense">
+        <h4>Pengeluaran</h4>
+        <p id="total-expense">Rp0</p>
+      </div>
+      <div class="saldo-box saldo">
+        <h4>Saldo Akhir</h4>
+        <p id="saldo-akhir">Rp0</p>
+      </div>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="script-transaksi.js" defer></script>
-    <script>
-        const BASE_URL = "http://localhost:5000";
-        function logout() {
-            localStorage.removeItem("user_id");
-            window.location.href = "login.html";
-        }
-    </script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="script-transaksi.js" defer></script>
+  <script>
+    const BASE_URL = "http://localhost:5000";
+    function logout() {
+      localStorage.removeItem("user_id");
+      window.location.href = "login.html";
+    }
+  </script>
 </body>
-
 </html>

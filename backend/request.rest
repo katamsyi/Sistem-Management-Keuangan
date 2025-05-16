@@ -41,7 +41,7 @@ Content-Type: application/json
   "tanggal": "2025-05-03",
   "type": "income",
   "amount": 250000,
-  "description": "Gaji freelance",
+  "description": "Gaji freelance baru",
   "category_id": 3
 }
 

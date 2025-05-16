@@ -1,92 +1,57 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Target Keuangan</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f9f9f9;
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
-        }
-
-        h1,
-        h2 {
-            text-align: center;
-        }
-
-        form,
-        .goal-item {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-        }
-
-        input,
-        button {
-            padding: 10px;
-            margin: 5px 0;
-            width: 100%;
-            font-size: 14px;
-        }
-
-        .goal-item {
-            border-left: 5px solid #007bff;
-        }
-
-        button.logout {
-            float: right;
-            background: #d9534f;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            cursor: pointer;
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Target Keuangan</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
-
 <body>
+  <div class="sidebar">
+    <h2>KeuanganKu</h2>
+    <ul>
+      <li><a href="transaksi.html">Transaksi</a></li>
+      <li><a href="kategori.html">Kelola Kategori</a></li>
+      <li><a href="goals.html" class="active">Kelola Goal</a></li>
+      <li><button onclick="logout()" class="logout">Logout</button></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
     <h1>Target Keuangan</h1>
+
     <a href="transaksi.html">
-        <button style="
-          background-color: #3498db;
-          color: white;
-          border: none;
-          padding: 10px 15px;
-          margin-bottom: 20px;
-          cursor: pointer;
-          font-size: 14px;
-          border-radius: 4px;
-        ">
-            ← Kembali ke Transaksi
-        </button>
+      <button class="back-button">← Kembali ke Transaksi</button>
     </a>
-    <form id="form-goal">
-        <input type="text" id="name" placeholder="Nama Tujuan" required />
-        <input type="number" id="target_amount" placeholder="Target (Rp)" required />
-        <input type="number" id="current_amount" placeholder="Terkumpul (Rp)" required />
-        <input type="date" id="due_date" required />
-        <button type="submit">Simpan</button>
+
+    <form id="form-goal" class="form-container">
+      <label for="name">Nama Tujuan</label>
+      <input type="text" id="name" placeholder="Nama Tujuan" required />
+
+      <label for="target_amount">Target (Rp)</label>
+      <input type="number" id="target_amount" placeholder="Target (Rp)" required />
+
+      <label for="current_amount">Terkumpul (Rp)</label>
+      <input type="number" id="current_amount" placeholder="Terkumpul (Rp)" required />
+
+      <label for="due_date">Tanggal Target</label>
+      <input type="date" id="due_date" required />
+
+      <button type="submit">Simpan</button>
     </form>
 
     <h2>Daftar Target</h2>
-    <div id="goal-list"></div>
+    <div id="goal-list" class="transaksi-grid"></div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="utils.js"></script>
-    <script src="script-goals.js" defer></script>
+  <script src="utils.js"></script>
+  <script src="script-goals.js" defer></script>
+  <script>
+    function logout() {
+      localStorage.removeItem("user_id");
+      window.location.href = "login.html";
+    }
+  </script>
 </body>
-
 </html>
