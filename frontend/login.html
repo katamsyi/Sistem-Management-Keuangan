@@ -2,71 +2,185 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login User</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f0f0f0;
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #e6f2f1;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            padding: 20px;
         }
 
         .login-container {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            width: 300px;
-        }
-
-        input,
-        button,
-        .link-button {
-            display: block;
+            background: #fff;
+            padding: 30px 35px;
+            border-radius: 15px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
             width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            font-size: 16px;
+            max-width: 360px;
             text-align: center;
         }
 
-        button {
-            background: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
+        .logo {
+            width: 300px;
+            margin: 0 auto 20px auto;
+            display: block;
         }
 
-        button:hover {
-            background: #218838;
+        .login-container h2 {
+            margin-bottom: 25px;
+            color: #2f847f;
+            font-weight: 700;
+            font-size: 28px;
+            letter-spacing: 1.2px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 15px;
+            margin: 10px 0 20px 0;
+            border-radius: 8px;
+            border: 1.8px solid #c2d9d7;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #48c9b0;
+            box-shadow: 0 0 5px rgba(72, 201, 176, 0.5);
+        }
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .password-wrapper input {
+            padding-right: 40px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1.8px solid #c2d9d7;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .password-wrapper input:focus {
+            border-color: #48c9b0;
+            box-shadow: 0 0 5px rgba(72, 201, 176, 0.5);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #2f847f;
+            user-select: none;
+            padding: 0;
+        }
+
+        .toggle-password:focus {
+            outline: none;
+        }
+
+        button.submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #48c9b0, #2f847f);
+            border: none;
+            padding: 14px;
+            font-size: 17px;
+            color: white;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.4s ease;
+            box-shadow: 0 6px 12px rgba(72, 201, 176, 0.6);
+            user-select: none;
+            margin-top: 10px;
+        }
+
+        button.submit-btn:hover {
+            background: linear-gradient(135deg, #2f847f, #48c9b0);
+            box-shadow: 0 8px 20px rgba(47, 132, 127, 0.7);
         }
 
         .link-button {
-            background: transparent;
+            margin-top: 15px;
+            background: none;
             border: none;
-            color: #007bff;
+            color: #2f847f;
+            font-weight: 600;
             text-decoration: underline;
             cursor: pointer;
+            font-size: 15px;
+            transition: color 0.3s ease;
+            user-select: none;
+        }
+
+        .link-button:hover {
+            color: #1f5f5c;
+        }
+
+        @media (max-width: 400px) {
+            .login-container {
+                padding: 25px 20px;
+            }
+
+            .login-container h2 {
+                font-size: 24px;
+            }
+
+            button.submit-btn {
+                font-size: 16px;
+                padding: 12px;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="login-container">
+        <img src="./assets/logo.jpeg" alt="Logo KeuanganKu" class="logo" />
         <h2>Login</h2>
         <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <button onclick="login()">Login</button>
+        <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Password" required />
+            <button type="button" class="toggle-password" onclick="togglePasswordVisibility()"
+                aria-label="Tampilkan password"></button>
+        </div>
+        <button class="submit-btn" onclick="login()">Login</button>
         <button class="link-button" onclick="window.location.href='register.html'">Belum punya akun? Daftar</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         const BASE_URL = "http://localhost:5000";
+
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
 
         async function login() {
             const email = document.getElementById("email").value.trim();
@@ -77,6 +191,16 @@
                 return;
             }
 
+            if (!isValidEmail(email)) {
+                alert("Masukkan email yang valid!");
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("Password minimal 6 karakter!");
+                return;
+            }
+
             try {
                 const res = await axios.post(`${BASE_URL}/login`, { email, password });
                 const user = res.data.user;
@@ -84,7 +208,18 @@
                 alert("Login berhasil!");
                 window.location.href = "transaksi.html";
             } catch (err) {
-                alert("Login gagal: " + err.response.data.message);
+                alert("Login gagal: " + (err.response?.data?.message || err.message));
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById("password");
+            const btn = document.querySelector(".toggle-password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+
+            } else {
+                passwordInput.type = "password";
             }
         }
     </script>

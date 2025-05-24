@@ -43,11 +43,12 @@ async function tampilkanKategori() {
 
       div.innerHTML = `
         <div class="kategori-nama"><strong>${kat.name}</strong></div>
-        <div class="kategori-aksi">
-          <button class="btn-edit" onclick="editKategori(${kat.id}, '${kat.name}')">✏️ Edit</button>
-          <button class="btn-hapus" onclick="hapusKategori(${kat.id})">🗑️ Hapus</button>
+        <div class="kategori-aksi" style="position: absolute; top: 10px; right: 10px;">
+          <button class="btn-edit" onclick="editKategori(${kat.id}, '${kat.name}')" title="Edit kategori ✏️">✏️</button>
+          <button class="btn-hapus" onclick="hapusKategori(${kat.id})" title="Hapus kategori 🗑️">🗑️</button>
         </div>
       `;
+
       daftarKategori.appendChild(div);
     });
   } catch (err) {

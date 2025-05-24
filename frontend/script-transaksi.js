@@ -55,8 +55,8 @@ async function getTransactions() {
         trx.amount
       ).toLocaleString()} - ${trx.description} <em>(${kategori})</em></p>
         <div class="trx-actions">
-          <button onclick="editTransaction(${trx.id})">✏️</button>
-          <button onclick="deleteTransaction(${trx.id})">🗑️</button>
+          <button onclick="editTransaction(${trx.id})">✏️Edit</button>
+          <button onclick="deleteTransaction(${trx.id})">🗑️Hapus</button>
         </div>
       `;
 

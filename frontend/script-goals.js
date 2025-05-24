@@ -20,11 +20,13 @@ async function getGoals() {
       return;
     }
 
-    goals.forEach(goal => {
+    goals.forEach((goal) => {
       const div = document.createElement("div");
       div.className = "goal-item";
       div.innerHTML = `
-        <p><strong>${goal.name}</strong> | Target: Rp${Number(goal.target_amount).toLocaleString()} | 
+        <p><strong>${goal.name}</strong> | Target: Rp${Number(
+        goal.target_amount
+      ).toLocaleString()} | 
         Saat ini: Rp${Number(goal.current_amount).toLocaleString()} <br/>
         Tanggal Target: ${goal.due_date}</p>
         <div class="actions">
@@ -66,9 +68,10 @@ form.addEventListener("submit", async (e) => {
 });
 
 function editGoal(id) {
-  axios.get(`${BASE_URL}/goals/${USER_ID}`)
-    .then(res => {
-      const goal = res.data.find(g => g.id === id);
+  axios
+    .get(`${BASE_URL}/goals/${USER_ID}`)
+    .then((res) => {
+      const goal = res.data.find((g) => g.id === id);
       if (!goal) return;
 
       document.getElementById("name").value = goal.name;
@@ -79,15 +82,16 @@ function editGoal(id) {
 
       document.querySelector("button[type='submit']").textContent = "Update";
     })
-    .catch(err => {
+    .catch((err) => {
       console.error("Gagal ambil data goal:", err.message);
     });
 }
 
 function deleteGoal(id) {
-  axios.delete(`${BASE_URL}/goals/${id}`)
+  axios
+    .delete(`${BASE_URL}/goals/${id}`)
     .then(() => getGoals())
-    .catch(err => console.error("Gagal hapus goal:", err.message));
+    .catch((err) => console.error("Gagal hapus goal:", err.message));
 }
 
 function logout() {

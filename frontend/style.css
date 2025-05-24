@@ -218,3 +218,15 @@ button:hover {
   }
 }
 
+.sidebar-logo {
+  padding: 5px;
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+}
+
+.sidebar-logo img {
+  max-width: 100%;
+  height: auto;
+  max-height: 80px; /* sesuaikan tinggi logo */
+  object-fit: contain;
+}

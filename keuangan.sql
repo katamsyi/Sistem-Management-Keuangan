@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Bulan Mei 2025 pada 09.07
+-- Waktu pembuatan: 24 Bulan Mei 2025 pada 08.13
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.0.30
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `note`
+-- Database: `keuangan`
 --
 
 -- --------------------------------------------------------
@@ -37,13 +37,12 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'Makanan & Minuman'),
+(1, 'Makanan & Minuman1'),
 (2, 'Transportasi'),
 (3, 'Gaji'),
 (4, 'Hiburan'),
 (5, 'Investasi'),
-(6, 'bb'),
-(7, 'aaa');
+(8, 'admin');
 
 -- --------------------------------------------------------
 
@@ -65,7 +64,11 @@ CREATE TABLE `goals` (
 --
 
 INSERT INTO `goals` (`id`, `user_id`, `name`, `target_amount`, `current_amount`, `due_date`) VALUES
-(1, 1, 'Beli Laptop', 10000000.00, 2000000.00, '2025-08-01');
+(1, 1, 'Beli Laptop', 10000000.00, 2000000.00, '2025-08-01'),
+(2, 4, 'Kaifa Ahlal Katamsyi', 12.00, 122.00, '2025-05-01'),
+(3, 4, 'kai', 2.00, 2.00, '2025-05-02'),
+(4, 4, 'weatherapp', 222.00, 22.00, '2025-05-09'),
+(5, 7, 'kai', 2.00, 2.00, '2025-05-02');
 
 -- --------------------------------------------------------
 
@@ -115,7 +118,9 @@ INSERT INTO `transactions` (`id`, `user_id`, `tanggal`, `type`, `amount`, `descr
 (1, 1, '2025-05-03', 'expense', 250000.00, 'Gaji freelance', 1),
 (2, 1, '2025-05-03', 'income', 250000.00, 'Gaji freelance', NULL),
 (3, 1, '2025-05-03', 'income', 250000.00, 'Gaji freelance', NULL),
-(6, 1, '2025-04-24', 'income', 67000.00, 'mainan', NULL);
+(6, 1, '2025-04-24', 'income', 67000.00, 'mainan', NULL),
+(8, 7, '2025-05-21', 'income', 8000000.00, 'Gaji', NULL),
+(9, 7, '2025-05-01', 'expense', 2000.00, 'jajan cilok', NULL);
 
 -- --------------------------------------------------------
 
@@ -137,7 +142,12 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
 (1, 'admin', 'admin@gmail.com', 'admin123'),
 (2, 'Ageng1', '1ageng@mail.com', '123456'),
-(3, 'kai', 'kai@gmail.com', '12345');
+(3, 'kai', 'kai@gmail.com', '12345'),
+(4, 'kai', 'kaifa@gmail.com', '123'),
+(5, '11', '11', '11'),
+(6, 'Kaifa Ahlal Katamsyi', 'student21@umy.ac.id', '12345678'),
+(7, 'kai', 'admin13@gmail.com', '12345678'),
+(8, 'weatherapp', 'adminn@gmail.com', '12345678');
 
 --
 -- Indexes for dumped tables
@@ -185,13 +195,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `goals`
 --
 ALTER TABLE `goals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `notes`
@@ -203,13 +213,13 @@ ALTER TABLE `notes`
 -- AUTO_INCREMENT untuk tabel `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

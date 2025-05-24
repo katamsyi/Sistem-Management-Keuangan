@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Manajemen Kategori</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-kategori.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
   <div class="sidebar">
-    <h2>KeuanganKu</h2>
+    <div class="sidebar-logo">
+      <img src="./assets/logo.jpeg" alt="Logo KeuanganKu" />
+    </div>
     <ul>
       <li><a href="transaksi.html">Transaksi</a></li>
       <li><a href="kategori.html" class="active">Kelola Kategori</a></li>
@@ -17,6 +23,7 @@
       <li><button onclick="logout()" class="logout">Logout</button></li>
     </ul>
   </div>
+
 
   <div class="main-content">
     <h1>Kelola Kategori</h1>
@@ -31,9 +38,9 @@
     <h2>Daftar Kategori</h2>
     <div id="daftar-kategori" class="transaksi-grid"></div>
 
-    <a href="transaksi.html">
+    <!-- <a href="transaksi.html">
       <button class="back-button">← Kembali ke Transaksi</button>
-    </a>
+    </a> -->
   </div>
 
   <script>
@@ -54,8 +61,12 @@
           div.innerHTML = `
             <strong>${kat.name}</strong>
             <div class="actions">
-              <button onclick="editKategori(${kat.id}, '${kat.name}')">✏️ Edit</button>
-              <button onclick="hapusKategori(${kat.id})">🗑️ Hapus</button>
+              <button class="icon-btn edit" title="Edit" onclick="editKategori(${kat.id}, '${kat.name}')">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <button class="icon-btn delete" title="Hapus" onclick="hapusKategori(${kat.id})">
+                <i class="fa fa-trash"></i>
+              </button>
             </div>
           `;
           daftarKategori.appendChild(div);
@@ -111,4 +122,5 @@
     fetchKategori();
   </script>
 </body>
+
 </html>
