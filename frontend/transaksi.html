@@ -78,12 +78,13 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="script-transaksi.js" defer></script>
   <script>
-    const BASE_URL = "http://localhost:5000";
-    function logout() {
-      localStorage.removeItem("user_id");
-      window.location.href = "login.html";
-    }
-  </script>
+  function logout() {
+    localStorage.removeItem("token");    // hapus token JWT
+    localStorage.removeItem("user_id");  // hapus user_id
+    window.location.href = "login.html"; // redirect ke login
+  }
+</script>
+  
 </body>
 
 </html>

@@ -1,235 +1,214 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Register User</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: #e6f2f1;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .register-container {
-            background: #fff;
-            padding: 30px 35px;
-            border-radius: 15px;
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 360px;
-            text-align: center;
-        }
-
-        .logo {
-            width: 300px;
-            margin: 0 auto 20px auto;
-            display: block;
-        }
-
-        .register-container h2 {
-            margin-bottom: 25px;
-            color: #2f847f;
-            font-weight: 700;
-            font-size: 28px;
-            letter-spacing: 1.2px;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 14px 15px;
-            margin: 10px 0 20px 0;
-            border-radius: 8px;
-            border: 1.8px solid #c2d9d7;
-            font-size: 16px;
-            transition: border-color 0.3s;
-            outline: none;
-            box-sizing: border-box;
-        }
-
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            border-color: #48c9b0;
-            box-shadow: 0 0 5px rgba(72, 201, 176, 0.5);
-        }
-
-        /* Password wrapper untuk tombol show/hide */
-        .password-wrapper {
-            position: relative;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .password-wrapper input {
-            padding-right: 40px;
-            /* ruang untuk tombol mata */
-            width: 100%;
-            border-radius: 8px;
-            border: 1.8px solid #c2d9d7;
-            font-size: 16px;
-            transition: border-color 0.3s;
-            outline: none;
-            box-sizing: border-box;
-        }
-
-        .password-wrapper input:focus {
-            border-color: #48c9b0;
-            box-shadow: 0 0 5px rgba(72, 201, 176, 0.5);
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            color: #2f847f;
-            user-select: none;
-            padding: 0;
-        }
-
-        .toggle-password:focus {
-            outline: none;
-        }
-
-        button.submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #48c9b0, #2f847f);
-            border: none;
-            padding: 14px;
-            font-size: 17px;
-            color: white;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.4s ease;
-            box-shadow: 0 6px 12px rgba(72, 201, 176, 0.6);
-            user-select: none;
-            margin-top: 10px;
-        }
-
-        button.submit-btn:hover {
-            background: linear-gradient(135deg, #2f847f, #48c9b0);
-            box-shadow: 0 8px 20px rgba(47, 132, 127, 0.7);
-        }
-
-        /* Responsive */
-        @media (max-width: 400px) {
-            .register-container {
-                padding: 25px 20px;
-            }
-
-            .register-container h2 {
-                font-size: 24px;
-            }
-
-            button.submit-btn {
-                font-size: 16px;
-                padding: 12px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register User</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #e6f2f1;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .register-container {
+      background: #fff;
+      padding: 30px 35px;
+      border-radius: 15px;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+    .logo {
+      width: 300px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+    .register-container h2 {
+      margin-bottom: 25px;
+      color: #2f847f;
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: 1.2px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 15px;
+      margin: 10px 0 20px 0;
+      border-radius: 8px;
+      border: 1.8px solid #c2d9d7;
+      font-size: 16px;
+      transition: border-color 0.3s;
+      outline: none;
+      box-sizing: border-box;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #48c9b0;
+      box-shadow: 0 0 5px rgba(72, 201, 176, 0.5);
+    }
+    .password-wrapper {
+      position: relative;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .password-wrapper input {
+      padding-right: 40px;
+      width: 100%;
+      border-radius: 8px;
+      border: 1.8px solid #c2d9d7;
+      font-size: 16px;
+      transition: border-color 0.3s;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .password-wrapper input:focus {
+      border-color: #48c9b0;
+      box-shadow: 0 0 5px rgba(72, 201, 176, 0.5);
+    }
+    .toggle-password {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: #2f847f;
+      user-select: none;
+      padding: 0;
+    }
+    .toggle-password:focus {
+      outline: none;
+    }
+    button.submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #48c9b0, #2f847f);
+      border: none;
+      padding: 14px;
+      font-size: 17px;
+      color: white;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.4s ease;
+      box-shadow: 0 6px 12px rgba(72, 201, 176, 0.6);
+      user-select: none;
+      margin-top: 10px;
+    }
+    button.submit-btn:hover {
+      background: linear-gradient(135deg, #2f847f, #48c9b0);
+      box-shadow: 0 8px 20px rgba(47, 132, 127, 0.7);
+    }
+    .link-button {
+      margin-top: 15px;
+      background: none;
+      border: none;
+      color: #2f847f;
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 15px;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+    .link-button:hover {
+      color: #1f5f5c;
+    }
+    @media (max-width: 400px) {
+      .register-container {
+        padding: 25px 20px;
+      }
+      .register-container h2 {
+        font-size: 24px;
+      }
+      button.submit-btn {
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-    <div class="register-container">
-        <img src="./assets/logo.jpeg" alt="Logo KeuanganKu" class="logo" />
-        <h2>Register</h2>
-        <input type="text" id="name" placeholder="Nama Lengkap" required />
-        <input type="email" id="email" placeholder="Email" required />
-        <div class="password-wrapper">
-            <input type="password" id="password" placeholder="Password" required />
-            <button type="button" class="toggle-password" onclick="togglePasswordVisibility()"
-                aria-label="Tampilkan password"></button>
-        </div>
-        <button class="submit-btn" onclick="register()">Daftar</button>
-        <button class="link-button" style="
-    margin-top: 15px;
-    background: none;
-    border: none;
-    color: #2f847f;
-    font-weight: 600;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 15px;
-    transition: color 0.3s ease;
-    user-select: none;
-  " onclick="window.location.href='login.html'">
-            Sudah punya akun? Login
-        </button>
+  <div class="register-container">
+    <img src="./assets/logo.jpeg" alt="Logo KeuanganKu" class="logo" />
+    <h2>Register</h2>
+    <input type="text" id="name" placeholder="Nama Lengkap" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <div class="password-wrapper">
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="button" class="toggle-password" onclick="togglePasswordVisibility()" aria-label="Tampilkan password">👁️</button>
     </div>
+    <button class="submit-btn" onclick="register()">Daftar</button>
+    <button class="link-button" onclick="window.location.href='login.html'">Sudah punya akun? Login</button>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        const BASE_URL = "http://localhost:5000";
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const BASE_URL = "http://localhost:5000";
 
-        function isValidEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
+    function isValidEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
 
-        async function register() {
-            const name = document.getElementById("name").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value.trim();
+    async function register() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-            if (!name || !email || !password) {
-                alert("Semua field wajib diisi!");
-                return;
-            }
+      if (!name || !email || !password) {
+        alert("Semua field wajib diisi!");
+        return;
+      }
 
-            if (name.length < 3) {
-                alert("Nama lengkap minimal 3 karakter!");
-                return;
-            }
+      if (name.length < 3) {
+        alert("Nama lengkap minimal 3 karakter!");
+        return;
+      }
 
-            if (!isValidEmail(email)) {
-                alert("Masukkan email yang valid!");
-                return;
-            }
+      if (!isValidEmail(email)) {
+        alert("Masukkan email yang valid!");
+        return;
+      }
 
-            if (password.length < 6) {
-                alert("Password minimal 6 karakter!");
-                return;
-            }
+      if (password.length < 6) {
+        alert("Password minimal 6 karakter!");
+        return;
+      }
 
-            try {
-                await axios.post(`${BASE_URL}/register`, { name, email, password });
-                alert("Registrasi berhasil! Silakan login.");
-                window.location.href = "login.html";
-            } catch (err) {
-                alert("Gagal daftar: " + (err.response?.data?.message || err.message));
-            }
-        }
+      try {
+        await axios.post(`${BASE_URL}/auth/register`, { name, email, password });
+        alert("Registrasi berhasil! Silakan login.");
+        window.location.href = "login.html";
+      } catch (err) {
+        alert("Gagal daftar: " + (err.response?.data?.message || err.message));
+      }
+    }
 
-        function togglePasswordVisibility() {
-            const passwordInput = document.getElementById("password");
-            const btn = document.querySelector(".toggle-password");
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                //btn.textContent = "🙈";
-            } else {
-                passwordInput.type = "password";
-                //btn.textContent = "👁️";
-            }
-        }
-    </script>
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById("password");
+      const btn = document.querySelector(".toggle-password");
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        btn.textContent = "🙈";
+      } else {
+        passwordInput.type = "password";
+        btn.textContent = "👁️";
+      }
+    }
+  </script>
 </body>
-
 </html>

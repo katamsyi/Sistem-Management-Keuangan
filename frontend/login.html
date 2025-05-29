@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -202,9 +204,13 @@
             }
 
             try {
-                const res = await axios.post(`${BASE_URL}/login`, { email, password });
-                const user = res.data.user;
+                const res = await axios.post(`${BASE_URL}/auth/login`, { email, password });
+                const { token, user } = res.data;
+
+                // Simpan token dan user_id di localStorage
+                localStorage.setItem("token", token);
                 localStorage.setItem("user_id", user.id);
+
                 alert("Login berhasil!");
                 window.location.href = "transaksi.html";
             } catch (err) {
@@ -214,10 +220,8 @@
 
         function togglePasswordVisibility() {
             const passwordInput = document.getElementById("password");
-            const btn = document.querySelector(".toggle-password");
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
-
             } else {
                 passwordInput.type = "password";
             }

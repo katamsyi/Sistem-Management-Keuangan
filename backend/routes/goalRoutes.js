@@ -5,8 +5,12 @@ import {
   updateGoal,
   deleteGoal,
 } from "../controller/goalController.js";
+import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
+
+// Proteksi semua route goals
+router.use(verifyToken);
 
 router.get("/:userId", getGoalsByUser);
 router.post("/", createGoal);

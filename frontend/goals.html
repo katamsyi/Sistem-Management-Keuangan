@@ -18,16 +18,12 @@
       <li><a href="transaksi.html">Transaksi</a></li>
       <li><a href="kategori.html">Kelola Kategori</a></li>
       <li><a href="goals.html" class="active">Kelola Goal</a></li>
-      <li><button onclick="logout()" class="logout">Logout</button></li>
+      <li><button id="logout-btn" class="logout">Logout</button></li>
     </ul>
   </div>
 
   <div class="main-content">
     <h1>Target Keuangan</h1>
-
-    <!-- <a href="transaksi.html">
-      <button class="back-button">← Kembali ke Transaksi</button>
-    </a> -->
 
     <form id="form-goal" class="form-container">
       <label for="name">Nama Tujuan</label>
@@ -51,10 +47,30 @@
 
   <script src="utils.js"></script>
   <script src="script-goals.js" defer></script>
+
   <script>
+    // Ambil token dan user_id dari localStorage
+    
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("user_id");
+
+    // Proteksi halaman: jika token atau userId tidak ada, redirect ke login
+    if (!token || !userId) {
+      alert("Silakan login terlebih dahulu.");
+      window.location.href = "login.html";
+    }
+
+    // Fungsi logout hapus token & user_id lalu redirect ke login
     function logout() {
+      localStorage.removeItem("token");
       localStorage.removeItem("user_id");
       window.location.href = "login.html";
+    }
+
+    // Pasang event listener tombol logout
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", logout);
     }
   </script>
 </body>

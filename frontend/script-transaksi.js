@@ -1,18 +1,30 @@
+const BASE_URL = "http://localhost:5000";
 const USER_ID = localStorage.getItem("user_id");
-if (!USER_ID) {
-  alert("Anda belum login. Silakan login terlebih dahulu.");
+const token = localStorage.getItem("token");
+
+if (!token || !USER_ID) {
+  alert("Silakan login terlebih dahulu.");
   window.location.href = "login.html";
 }
 
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user_id");
+  window.location.href = "login.html";
+}
+
+document.getElementById("logout-btn")?.addEventListener("click", logout);
+
 const form = document.getElementById("form-transaksi");
-const listContainer = document.getElementById("transaction-list");
 const submitButton = form.querySelector("button[type='submit']");
 let currentId = null;
 let lastData = [];
 
 async function loadCategories() {
   try {
-    const res = await axios.get(`${BASE_URL}/categories`);
+    const res = await axios.get(`${BASE_URL}/categories`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     const categories = res.data;
     const categorySelect = document.getElementById("category_id");
     categorySelect.innerHTML = '<option value="">Pilih Kategori</option>';
@@ -23,13 +35,15 @@ async function loadCategories() {
       categorySelect.appendChild(option);
     });
   } catch (err) {
-    console.error("Gagal ambil kategori:", err.message);
+    console.error("Gagal ambil kategori:", err);
   }
 }
 
 async function getTransactions() {
   try {
-    const res = await axios.get(`${BASE_URL}/transactions/${USER_ID}`);
+    const res = await axios.get(`${BASE_URL}/transactions/${USER_ID}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     const data = res.data;
     lastData = data;
 
@@ -69,7 +83,7 @@ async function getTransactions() {
 
     tampilkanRingkasan(data);
   } catch (err) {
-    console.error("Gagal ambil transaksi:", err.message);
+    console.error("Gagal ambil transaksi:", err);
   }
 }
 
@@ -100,10 +114,14 @@ form.addEventListener("submit", async (e) => {
 
   try {
     if (currentId) {
-      await axios.put(`${BASE_URL}/transactions/${currentId}`, data);
+      await axios.put(`${BASE_URL}/transactions/${currentId}`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       currentId = null;
     } else {
-      await axios.post(`${BASE_URL}/transactions`, data);
+      await axios.post(`${BASE_URL}/transactions`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     }
 
     form.reset();
@@ -112,7 +130,7 @@ form.addEventListener("submit", async (e) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     alert("Transaksi berhasil disimpan.");
   } catch (err) {
-    console.error("Gagal simpan:", err.message);
+    console.error("Gagal simpan:", err);
     alert("Gagal menyimpan transaksi.");
   } finally {
     submitButton.disabled = false;
@@ -120,14 +138,15 @@ form.addEventListener("submit", async (e) => {
 });
 
 async function deleteTransaction(id) {
-  const yakin = confirm("Yakin ingin menghapus transaksi ini?");
-  if (!yakin) return;
+  if (!confirm("Yakin ingin menghapus transaksi ini?")) return;
 
   try {
-    await axios.delete(`${BASE_URL}/transactions/${id}`);
+    await axios.delete(`${BASE_URL}/transactions/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     getTransactions();
   } catch (err) {
-    console.error("Gagal hapus:", err.message);
+    console.error("Gagal hapus:", err);
   }
 }
 
@@ -163,5 +182,5 @@ function tampilkanRingkasan(data) {
     "Rp" + saldo.toLocaleString();
 }
 
-getTransactions();
 loadCategories();
+getTransactions();

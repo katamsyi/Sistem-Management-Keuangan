@@ -1,3 +1,12 @@
+const BASE_URL = "http://localhost:5000";
+
+// Cek token di localStorage, jika tidak ada redirect ke login
+const token = localStorage.getItem("token");
+if (!token) {
+  alert("Silakan login terlebih dahulu.");
+  window.location.href = "login.html";
+}
+
 // Mengambil elemen form
 const formulir = document.querySelector("form");
 
@@ -15,12 +24,19 @@ formulir.addEventListener("submit", (e) => {
 
   const id = elemen_tanggal.dataset.id; // Khusus untuk edit
 
+  // Header Authorization dengan token JWT
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   // Mengecek apakah harus POST atau PUT
   // Jika ID kosong, akan menggunakan POST untuk menambah data baru
-  if (id == "") {
+  if (!id) {
     // Tambah diary
     axios
-      .post(`${BASE_URL}/add-keuangan`, { tanggal, isi })
+      .post(`${BASE_URL}/add-keuangan`, { tanggal, isi }, config)
       .then(() => {
         // Bersihkan form setelah submit
         elemen_tanggal.value = "";
@@ -33,7 +49,7 @@ formulir.addEventListener("submit", (e) => {
   } else {
     // Jika ada ID, lakukan PUT untuk memperbarui diary yang ada
     axios
-      .put(`${BASE_URL}/edit-keuangan/${id}`, { tanggal, isi })
+      .put(`${BASE_URL}/edit-keuangan/${id}`, { tanggal, isi }, config)
       .then(() => {
         // Bersihkan form setelah submit
         elemen_tanggal.dataset.id = "";
@@ -50,7 +66,9 @@ formulir.addEventListener("submit", (e) => {
 // Fungsi untuk mengambil daftar diary (GET)
 async function getDiary() {
   try {
-    const { data } = await axios.get(`${BASE_URL}/keuangan`);
+    const { data } = await axios.get(`${BASE_URL}/keuangan`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     const table = document.querySelector("#diary-list");
     let tampilan = "";
@@ -61,7 +79,7 @@ async function getDiary() {
       tampilan += tampilkanDiary(no, diary);
       no++;
     }
-    table.innerHTML = tampilan;  // Memperbarui daftar diary yang ditampilkan
+    table.innerHTML = tampilan; // Memperbarui daftar diary yang ditampilkan
 
     // Panggil fungsi hapusDiary dan editDiary untuk menangani aksi
     hapusDiary();
@@ -91,8 +109,10 @@ function hapusDiary() {
     btn.addEventListener("click", () => {
       const id = btn.dataset.id;
       axios
-        .delete(`${BASE_URL}/delete-keuangan/${id}`)
-        .then(() => getDiary())  // Memuat ulang daftar diary setelah penghapusan
+        .delete(`${BASE_URL}/delete-keuangan/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(() => getDiary()) // Memuat ulang daftar diary setelah penghapusan
         .catch((error) => console.log(error));
     });
   });

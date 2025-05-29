@@ -5,29 +5,16 @@ import {
   updateTransaction,
   deleteTransaction,
 } from "../controller/transactionController.js";
-import Transaction from "../models/Transaction.js";
-import Category from "../models/Category.js"; // jika ingin include kategori di relasi
+import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
-router.get("/transactions/:user_id", async (req, res) => {
-  const transactions = await Transaction.findAll({
-    where: { user_id: req.params.user_id },
-    include: [{ model: Category, attributes: ["name"] }],
-  });
-  res.json(transactions);
-});
+// Proteksi semua route transaksi
+router.use(verifyToken);
 
-// Ambil semua transaksi user tertentu
-router.get("/transactions/:user_id", getTransactions);
-
-// Tambah transaksi
-router.post("/transactions", createTransaction);
-
-// Update transaksi
-router.put("/transactions/:id", updateTransaction);
-
-// Hapus transaksi
-router.delete("/transactions/:id", deleteTransaction);
+router.get("/:user_id", getTransactions);
+router.post("/", createTransaction);
+router.put("/:id", updateTransaction);
+router.delete("/:id", deleteTransaction);
 
 export default router;

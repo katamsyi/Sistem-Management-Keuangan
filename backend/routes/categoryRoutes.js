@@ -6,13 +6,14 @@ import {
   updateCategory,
   deleteCategory,
 } from "../controller/categoryController.js";
+import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
+router.use(verifyToken);
+
 router.get("/", getAllCategories);
 router.post("/", createCategory);
-
-// ➕ Tambahan:
 router.get("/:id", getCategoryById);
 router.put("/:id", updateCategory);
 router.delete("/:id", deleteCategory);
