@@ -5,45 +5,60 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Manajemen Kategori</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="style-kategori.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
-<body>
-  <div class="sidebar">
-    <div class="sidebar-logo">
-      <img src="./assets/logo.jpeg" alt="Logo KeuanganKu" />
+<body class="bg-gray-100 min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 text-white p-4 flex flex-col min-h-screen">
+    <div class="flex flex-col items-center mb-6">
+      <img src="./assets/logo.jpeg" alt="Logo KeuanganKu" class="" />
+      <h2 class="text-lg font-bold"></h2>
     </div>
-    <ul>
-      <li><a href="transaksi.html">Transaksi</a></li>
-      <li><a href="kategori.html" class="active">Kelola Kategori</a></li>
-      <li><a href="goals.html">Kelola Goal</a></li>
-      <li><button id="logout-btn" class="logout">Logout</button></li>
-    </ul>
-  </div>
+    <nav class="flex-grow">
+      <ul class="space-y-2">
+        <li><a href="transaksi.html" class="block py-2 px-3 rounded hover:bg-gray-700">Transaksi</a></li>
+        <li><a href="kategori.html" class="block py-2 px-3 rounded bg-blue-600">Kelola Kategori</a></li>
+        <li><a href="goals.html" class="block py-2 px-3 rounded hover:bg-gray-700">Kelola Goal</a></li>
+      </ul>
+    </nav>
+    <button id="logout-btn" class="mt-4 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded">Logout</button>
+  </aside>
 
-  <div class="main-content">
-    <h1>Kelola Kategori</h1>
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
+    <h1 class="text-2xl font-bold mb-6">Kelola Kategori</h1>
 
-    <form id="form-kategori" class="form-container">
-      <label for="nama-kategori">Nama Kategori</label>
-      <input type="text" id="nama-kategori" placeholder="Nama Kategori" required />
+    <!-- Form -->
+    <form id="form-kategori" class="bg-white shadow p-6 rounded mb-6 max-w-md">
+      <label for="nama-kategori" class="block font-medium mb-1">Nama Kategori</label>
+      <input type="text" id="nama-kategori" placeholder="Nama Kategori" required
+        class="w-full border rounded px-3 py-2 mb-4" />
       <input type="hidden" id="kategori-id" />
-      <button type="submit" id="submit-btn">Simpan</button>
+      <button type="submit" id="submit-btn"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Simpan</button>
     </form>
 
-    <h2>Daftar Kategori</h2>
-    <div id="daftar-kategori" class="transaksi-grid"></div>
-  </div>
+    <!-- Daftar Kategori -->
+    <h2 class="text-xl font-semibold mb-4">Daftar Kategori</h2>
+    <div id="daftar-kategori" class="grid md:grid-cols-2 gap-4"></div>
+  </main>
 
+  <!-- Script -->
   <script>
     const BASE_URL = "http://localhost:5000";
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("user_id");
 
-    // Proteksi halaman: jika token atau user_id tidak ada, redirect ke login
     if (!token || !userId) {
       alert("Silakan login terlebih dahulu.");
       window.location.href = "login.html";
@@ -55,14 +70,12 @@
     const daftarKategori = document.getElementById("daftar-kategori");
     const submitBtn = document.getElementById("submit-btn");
 
-    // Fungsi logout yang hapus token dan user_id
     function logout() {
       localStorage.removeItem("token");
       localStorage.removeItem("user_id");
       window.location.href = "login.html";
     }
 
-    // Pasang event listener logout
     const logoutBtn = document.getElementById("logout-btn");
     if (logoutBtn) {
       logoutBtn.addEventListener("click", logout);
@@ -76,14 +89,15 @@
         daftarKategori.innerHTML = "";
         res.data.forEach((kat) => {
           const div = document.createElement("div");
-          div.className = "kategori-item";
+          div.className = "bg-white shadow rounded p-4 flex justify-between items-center";
+
           div.innerHTML = `
             <strong>${kat.name}</strong>
-            <div class="actions">
-              <button class="icon-btn edit" title="Edit" onclick="editKategori(${kat.id}, '${kat.name}')">
+            <div class="flex gap-2 text-lg">
+              <button class="text-blue-500 hover:text-blue-700" title="Edit" onclick="editKategori(${kat.id}, '${kat.name}')">
                 <i class="fa fa-pencil"></i>
               </button>
-              <button class="icon-btn delete" title="Hapus" onclick="hapusKategori(${kat.id})">
+              <button class="text-red-500 hover:text-red-700" title="Hapus" onclick="hapusKategori(${kat.id})">
                 <i class="fa fa-trash"></i>
               </button>
             </div>

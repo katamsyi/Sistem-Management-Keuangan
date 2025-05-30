@@ -32,22 +32,52 @@
       if (!goalList) return;
 
       if (lastData.length === 0) {
-        goalList.innerHTML = "<p>Belum ada target keuangan.</p>";
+        goalList.innerHTML =
+          "<p class='text-gray-600'>Belum ada target keuangan.</p>";
         return;
       }
 
       goalList.innerHTML = "";
       lastData.forEach((goal) => {
+        const progress = Math.min(
+          (goal.current_amount / goal.target_amount) * 100,
+          100
+        ).toFixed(0);
+
         const div = document.createElement("div");
-        div.className = "goal-item";
+        div.className = "relative bg-white shadow rounded p-4";
+
         div.innerHTML = `
-          <h3>${goal.name}</h3>
-          <p>Target: Rp${Number(goal.target_amount).toLocaleString()}</p>
-          <p>Saat ini: Rp${Number(goal.current_amount).toLocaleString()}</p>
-          <p>Batas waktu: ${goal.due_date}</p>
-          <button onclick="editGoal(${goal.id})">✏️ Edit</button>
-          <button onclick="deleteGoal(${goal.id})">🗑️ Hapus</button>
+          <h3 class="text-lg font-bold text-gray-800 mb-1">${goal.name}</h3>
+          <p class="text-sm text-gray-600 mb-1">Target: Rp${Number(
+            goal.target_amount
+          ).toLocaleString()}</p>
+          <p class="text-sm text-gray-600 mb-1">Terkumpul: Rp${Number(
+            goal.current_amount
+          ).toLocaleString()}</p>
+          <p class="text-sm text-gray-600 mb-4">Batas Waktu: <span class="font-medium">${
+            goal.due_date
+          }</span></p>
+
+          <div class="w-full bg-gray-200 rounded-full h-3 mb-3">
+            <div class="bg-blue-600 h-3 rounded-full" style="width: ${progress}%"></div>
+          </div>
+          <p class="text-sm text-right text-gray-500">${progress}% tercapai</p>
+
+          <div class="absolute top-2 right-2 flex gap-2 text-xl">
+            <button class="text-blue-500 hover:text-blue-700" title="Edit" onclick="editGoal(${
+              goal.id
+            })">
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+            <button class="text-red-500 hover:text-red-700" title="Hapus" onclick="deleteGoal(${
+              goal.id
+            })">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
         `;
+
         goalList.appendChild(div);
       });
     } catch (error) {
@@ -98,21 +128,6 @@
     }
   });
 
-  async function deleteGoal(id) {
-    if (!confirm("Yakin ingin menghapus target ini?")) return;
-
-    try {
-      await axios.delete(`${BASE_URL}/goals/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      getGoals();
-    } catch (error) {
-      console.error("Gagal hapus target:", error);
-      alert("Gagal menghapus target.");
-    }
-  }
-
-  // Buat editGoal sebagai global supaya bisa dipanggil dari HTML
   window.editGoal = function (id) {
     const goal = lastData.find((g) => g.id === id);
     if (!goal) return;
@@ -125,20 +140,19 @@
     submitButton.textContent = "Update";
   };
 
-  // Fungsi deleteGoal juga harus global
-window.deleteGoal = async function (id) {
-  if (!confirm("Yakin ingin menghapus target ini?")) return;
+  window.deleteGoal = async function (id) {
+    if (!confirm("Yakin ingin menghapus target ini?")) return;
 
-  try {
-    await axios.delete(`${BASE_URL}/goals/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    getGoals();
-  } catch (error) {
-    console.error("Gagal hapus target:", error);
-    alert("Gagal menghapus target.");
-  }
-};
+    try {
+      await axios.delete(`${BASE_URL}/goals/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      getGoals();
+    } catch (error) {
+      console.error("Gagal hapus target:", error);
+      alert("Gagal menghapus target.");
+    }
+  };
 
   getGoals();
 })();

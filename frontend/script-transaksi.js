@@ -50,8 +50,8 @@ async function getTransactions() {
     const listIncome = document.getElementById("list-income");
     const listExpense = document.getElementById("list-expense");
 
-    listIncome.innerHTML = "<h3>Pemasukan</h3>";
-    listExpense.innerHTML = "<h3>Pengeluaran</h3>";
+    listIncome.innerHTML = "<h3></h3>";
+    listExpense.innerHTML = "<h3></h3>";
 
     if (data.length === 0) {
       listIncome.innerHTML += "<p>Tidak ada pemasukan.</p>";
@@ -63,16 +63,24 @@ async function getTransactions() {
     data.forEach((trx) => {
       const kategori = trx.category ? trx.category.name : "-";
       const div = document.createElement("div");
-      div.className = `transaction ${trx.type}`;
+      div.className = `relative transaction ${trx.type} p-4 mb-3 bg-white shadow rounded`;
+
       div.innerHTML = `
-        <p><strong>${trx.tanggal}</strong><br>Rp${Number(
-        trx.amount
-      ).toLocaleString()} - ${trx.description} <em>(${kategori})</em></p>
-        <div class="trx-actions">
-          <button onclick="editTransaction(${trx.id})">✏️Edit</button>
-          <button onclick="deleteTransaction(${trx.id})">🗑️Hapus</button>
-        </div>
-      `;
+  <div>
+    <p class="font-semibold">${trx.tanggal}</p>
+    <p>Rp${Number(trx.amount).toLocaleString()} - ${
+        trx.description
+      } <em class="text-gray-500">(${kategori})</em></p>
+  </div>
+  <div class="trx-actions absolute bottom-2 right-2 flex gap-2 text-sm">
+    <button onclick="editTransaction(${
+      trx.id
+    })" class="text-black-500 hover:text-blue-700">✏️ Edit</button>
+    <button onclick="deleteTransaction(${
+      trx.id
+    })" class="text-red-500 hover:text-red-700">🗑️ Hapus</button>
+  </div>
+`;
 
       if (trx.type === "income") {
         listIncome.appendChild(div);
